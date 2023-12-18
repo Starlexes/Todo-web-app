@@ -1,0 +1,56 @@
+{% extends 'todolist/base.html' %}
+
+
+{% block content %}
+    <a class="new-task" href = '{% url "todolist:add_task" %}'>Add new task</a>   
+{% if tasks %}
+    <div class="ordering">
+        <select id='ordering'name="ordering">
+            <option >Order by importance</option>
+            <option >Order by finished</option>
+            <option >Order by not finished</option>
+        </select>
+    </div>
+    <div class="container">
+        
+        <h2 onclick="getFinished">Tasks</h2>
+
+        <div class="tasks-list">
+        {% for task in tasks %}
+        <div class="tasks-cont">
+        <a href="{{task.get_absolute_url}}" class="task-body">
+            <div class="task-area">
+                <p class="task-title">{{task.title}}</p>
+                <p class="task-desc">Task: {{task.description|truncatewords:10}}</p>
+                {% if task.signif.importance == "Low"%}
+                    <p class="task-finish-date"><span class="finish-low">Finish date: {{task.finish_date}}</span></p>
+                {% elif task.signif.importance == "Medium"%}
+                    <p class="task-finish-date"><span class="finish-medium">Finish date: {{task.finish_date}}</span></p>
+                {% elif task.signif.importance == "High"%}
+                    <p class="task-finish-date"><span class="finish-high">Finish date: {{task.finish_date}}</span></p>
+                {% else %}
+                    <p class="task-finish-date"><span class="finish-critical">Finish date: {{task.finish_date}}</span></p>
+                {%endif%}
+                {% if task.finished%}
+                    <p class="task-finished">Status: ✅</p>
+                {%else %}
+                    <p class="task-finished">Status: ❌</p>
+                {%endif%}
+            </div>
+        </a>
+        </div>
+        {% endfor %}
+        </div>
+        
+        
+    </div>
+
+{% else %}
+<p>No one tasks added</p>
+{% endif %}  
+{% endblock %}
+
+
+
+
+

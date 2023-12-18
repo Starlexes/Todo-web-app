@@ -1,0 +1,27 @@
+{% extends "todolist/base.html" %}
+
+
+{% block content%}
+{% if sent %}
+<a href="{% url 'todolist:task_detail' task.id%}">Go back to edited task</a>
+{% else %}
+<h1 style="text-align: center;">Edit Task</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-container">
+   
+        {{ form.as_p}}
+        <input type="submit" value="Accept" class="form-submit">
+    </div>
+</form>
+{% endif %}
+
+
+{% endblock %}
+
+{% for field in form %}
+    <div>
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+    </div>
+{% endfor %}

@@ -1,0 +1,57 @@
+{% extends "todolist/base.html" %}
+
+
+{% block content %}
+
+    <style>
+        p {
+            font-size: 25px;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .link-home {
+            margin-left: 30px;
+            color: #33bcde;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .link-home:visited {
+            margin-left: 30px;
+            color: #32a9c7;
+        }
+
+        .link-home:hover {
+            text-decoration: underline;
+        }
+
+        
+    </style>
+    <div class="menu-tools">
+        <a href="{%url 'todolist:home' %}" class="link-home">Back to main list</a>
+        <div class="edit">
+            <a href="{% url 'todolist:edit_task' task.id %}">Edit task</a>
+        </div>
+
+        <div class="delete">
+            <a href="{% url 'todolist:delete_task' task.id %}">Delete task</a>
+        
+        </div> 
+    </div>   
+    <p>Task: {{task.title }}</p>
+    <hr/>
+    <p>Description: {{task.description}}</p>
+    <hr/>
+    <p>Finish date: {{task.finish_date}}</p>
+    <hr/>
+    <p>Status:
+        {% if task.finished%}
+            ✅
+        {%else %}
+            ❌
+        {%endif%}
+    </p>
+    <hr/>
+    <p>Significance: {{task.signif}}</p>
+
+{% endblock %}

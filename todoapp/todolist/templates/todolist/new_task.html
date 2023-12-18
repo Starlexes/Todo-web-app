@@ -1,0 +1,31 @@
+{% extends "todolist/base.html"%}
+
+{%block content %}
+{% if sent %}
+<p style="text-align: center;">New task "{{task.title}} added to list</p>
+<a style="text-align: center;" href="{% url 'todolist:home' %}">Back to list</a>
+
+{% else %}
+
+<h2>Add new task</h2>
+
+    <form method="post">
+        {% csrf_token %}
+    
+        <div class="form-container">
+   
+            {{ form.as_p}}
+            <input type="submit" value="Accept" class="form-submit">
+        </div>
+    </form>
+{% endif%}
+
+{% endblock%}
+
+
+{% for field in form %}
+    <div>
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+    </div>
+{% endfor %}
