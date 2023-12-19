@@ -5,16 +5,28 @@ from django.utils.text import slugify
 
 from todolist.models import Task, Importance
 from todolist.forms import EditTaskForm, AddTaskForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 importances = ['Low', 'Medium', 'High', 'Critical']
 
 
 def main_page(request):
-    if request.method == 'POST' or request.method == 'GET': 
-        title = 'Todo'
+   
+    title = 'Todo'
+    
 
-        tasks = Task.objects.all()
+    tasks = Task.objects.all()
+    paginator = Paginator(tasks, 2)
+    page_number = request.GET.get('page', 1)
+    try:
+        tasks = paginator.page(page_number)
+
+    except EmptyPage:
+        tasks = paginator.page(paginator.num_pages)
+
+    except PageNotAnInteger:
+        tasks = paginator.page(1)
 
     return render(request, 'todolist/index.html', {"title" : title, "tasks" : tasks} )
 

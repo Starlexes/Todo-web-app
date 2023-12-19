@@ -98,7 +98,7 @@ footer {
   color:#2d63ba;
   font-size: 20;
   position: absolute;
-  right: 10px;
+  right: 20px;
   top: 22%;
   
   
@@ -226,4 +226,10 @@ footer {
 
 .menu-tools {
   height: 50px;
+}
+
+
+.pagination {
+  margin-left: 30px;
+  padding: 5px;
 }

@@ -44,10 +44,11 @@
         
         
     </div>
-
+    {% include "todolist/pagination.html" with page=tasks%}
 {% else %}
 <p>No one tasks added</p>
 {% endif %}  
+
 {% endblock %}
 
 
