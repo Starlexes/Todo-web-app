@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.utils.text import slugify
+from taggit.models import Tag
 
 from todolist.models import Task, Importance
 from todolist.forms import EditTaskForm, AddTaskForm
@@ -11,12 +12,15 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 importances = ['Low', 'Medium', 'High', 'Critical']
 
 
-def main_page(request):
+def main_page(request, tag_slug=None):
    
     title = 'Todo'
     
-
+    tag = None
     tasks = Task.objects.all()
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        tasks= Task.objects.filter(tag__in = [tag])
     paginator = Paginator(tasks, 2)
     page_number = request.GET.get('page', 1)
     try:
@@ -28,7 +32,7 @@ def main_page(request):
     except PageNotAnInteger:
         tasks = paginator.page(1)
 
-    return render(request, 'todolist/index.html', {"title" : title, "tasks" : tasks} )
+    return render(request, 'todolist/index.html', {"title" : title, "tasks" : tasks, "tag":tag} )
 
 def about(request, task_id):
     title = 'About task'

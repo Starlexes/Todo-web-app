@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from taggit.managers import TaggableManager
 # Create your models here.
 
 class Task(models.Model):
@@ -10,6 +11,7 @@ class Task(models.Model):
     finished = models.BooleanField(default=False, verbose_name='Finished')
     signif = models.ForeignKey('Importance', on_delete=models.PROTECT, null=True,
                                verbose_name='Importance')
+    tag = TaggableManager()
 
     def __str__(self):
         return self.title

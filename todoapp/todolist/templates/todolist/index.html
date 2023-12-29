@@ -13,14 +13,17 @@
     </div>
     <div class="container">
         
-        <h2 onclick="getFinished">Tasks</h2>
-
+        {% if tag %}
+            <h2>Tasks tagged with tag {{ tag.name }}</h2>
+        {% else %}
+            <h2>Tasks</h2>
+        {% endif %}
         <div class="tasks-list">
         {% for task in tasks %}
         <div class="tasks-cont">
-        <a href="{{task.get_absolute_url}}" class="task-body">
+        <div class="task-body">
             <div class="task-area">
-                <p class="task-title">{{task.title}}</p>
+                <p class="task-title"><a href="{{task.get_absolute_url}}" class="link-title">{{task.title}}</a></p>
                 <p class="task-desc">Task: {{task.description|truncatewords:10}}</p>
                 {% if task.signif.importance == "Low"%}
                     <p class="task-finish-date"><span class="finish-low">Finish date: {{task.finish_date}}</span></p>
@@ -36,6 +39,17 @@
                 {%else %}
                     <p class="task-finished">Status: ❌</p>
                 {%endif%}
+                {% if task.tag.all%} 
+                    <p class="task-desc">Tags: 
+                        {% for tag in task.tag.all %}
+                        <a href="{% url 'todolist:home_by_tags' tag.slug %}">{{tag.name}}</a>
+                        {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                {% else %}
+                    <p class="task-desc">Tags: no tags</p>
+                {% endif %}
+
             </div>
         </a>
         </div>
