@@ -11,6 +11,10 @@ body {
   overflow-x: hidden;
 }
 
+content {
+  flex: 1 0 auto;
+}
+
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -46,12 +50,11 @@ footer {
   color: #fff;
   padding: 10px;
   text-align: center;
-  position:absolute;
-  display: block;
+  position:relative;
   width: 100%;
   margin: 0;
   margin-top: 10px;
-  
+  flex: 0 0 auto;
  
 }
 .cont-foot {
@@ -87,6 +90,16 @@ footer {
   
   color: #4eb5d4;
   
+}
+
+.tag-main-page {
+  text-decoration: none;
+  color: #22a0c9;
+}
+
+.tag-main-page:visited {
+  text-decoration: none;
+  color: #2c7892;
 }
 
 .task-desc, .task-finish-date, .task-finished {
@@ -256,3 +269,4 @@ footer {
   margin-left: 30px;
   padding: 5px;
 }
+

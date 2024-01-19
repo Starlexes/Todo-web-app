@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    <a class="new-task" href = '{% url "todolist:add_task" %}'>Add new task</a>   
+    <a class="new-task" href='{% url "todolist:add_task" %}'>Add new task</a>   
 {% if tasks %}
     <div class="ordering">
         <select id='ordering'name="ordering">
@@ -14,7 +14,7 @@
     <div class="container">
         
         {% if tag %}
-            <h2>Tasks tagged with tag {{ tag.name }}</h2>
+            <h2>Tasks tagged with tag {{ tag.name }}. Go back to <a class="tag-main-page" href="{% url 'todolist:home' %}">main page</a>.</h2>
         {% else %}
             <h2>Tasks</h2>
         {% endif %}
