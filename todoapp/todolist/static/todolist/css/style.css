@@ -1,3 +1,7 @@
+html {
+  height: 100%;
+}
+
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -5,8 +9,6 @@ body {
   padding: 0;
   height: 100%;
   overflow-x: hidden;
-  
-  
 }
 
 .container {
@@ -47,9 +49,14 @@ footer {
   position:absolute;
   display: block;
   width: 100%;
+  margin: 0;
   margin-top: 10px;
   
  
+}
+.cont-foot {
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 .task-area {
@@ -68,7 +75,18 @@ footer {
 }
 .link-title {
   text-decoration: none;
-  color: #fff;
+  color: #ffffff;
+}
+
+.link-tag {
+  text-decoration: none;
+  color: #4eb5d4;
+  font-weight: bold;
+}
+.link-tag:visited {
+  
+  color: #4eb5d4;
+  
 }
 
 .task-desc, .task-finish-date, .task-finished {
@@ -93,7 +111,7 @@ footer {
 }
 
 .finish-high {
-  color: #cf763e
+  color: #e47733
 }
 .finish-critical {
   color: #bd2a2a;

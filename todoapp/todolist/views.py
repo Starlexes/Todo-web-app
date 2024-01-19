@@ -21,7 +21,7 @@ def main_page(request, tag_slug=None):
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         tasks= Task.objects.filter(tag__in = [tag])
-    paginator = Paginator(tasks, 2)
+    paginator = Paginator(tasks, 6)
     page_number = request.GET.get('page', 1)
     try:
         tasks = paginator.page(page_number)

@@ -42,7 +42,7 @@
                 {% if task.tag.all%} 
                     <p class="task-desc">Tags: 
                         {% for tag in task.tag.all %}
-                        <a href="{% url 'todolist:home_by_tags' tag.slug %}">{{tag.name}}</a>
+                        <a class = "link-tag" href="{% url 'todolist:home_by_tags' tag.slug %}">{{tag.name}}</a>
                         {% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </p>
@@ -51,7 +51,7 @@
                 {% endif %}
 
             </div>
-        </a>
+        </div>
         </div>
         {% endfor %}
         </div>
