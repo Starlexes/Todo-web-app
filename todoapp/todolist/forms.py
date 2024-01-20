@@ -1,12 +1,12 @@
-from django.forms import ModelForm
+from django import forms
 from todolist.models import Task
 
-class EditTaskForm(ModelForm):
+class EditTaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'finish_date', 'finished', 'signif']
 
-class AddTaskForm(ModelForm):
+class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'finish_date', 'signif']

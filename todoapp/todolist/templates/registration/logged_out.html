@@ -1,0 +1,12 @@
+{% extends "todolist/base.html" %}
+
+{% block content %}
+    <div class="logout-body">
+        <h1>Log out from TodoApp</h1>
+        <p>
+            You have been successfully logged out.
+            You also can <a href="{% url 'todolist:home' %}">login again</a>
+        
+        </p>
+    </div>
+{% endblock %}

@@ -1,5 +1,5 @@
 html {
-  height: 100%;
+  height: 150%;
 }
 
 body {
@@ -12,7 +12,8 @@ body {
 }
 
 content {
-  flex: 1 0 auto;
+  display: block;
+  height: 100%;
 }
 
 .container {
@@ -270,3 +271,45 @@ footer {
   padding: 5px;
 }
 
+.login-body {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  width: 30%;
+  height: 50%;
+}
+
+.login-form p{
+  margin-bottom: 30px;
+}
+
+.title-name {
+  width: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+.user {
+  display: block;
+  position: relative;
+ 
+  right: 10px;
+}
+.user a {
+  text-decoration: none;
+  font-size: 20px;
+  color: #fff;
+}
+
+.user a:hover {
+
+  color: #b9b8b8;
+}
+
+
+.logout-body {
+  position: relative;
+  display: block;
+  
+  margin-left: 50px;
+}

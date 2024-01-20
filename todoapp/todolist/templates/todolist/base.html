@@ -8,10 +8,18 @@
 <body>
   <header>
     <h1 class="title-name">My ToDo App</h1>
+    {% if request.user.is_authenticated %}
+
+    <span class="user">
+      <a href="{% url 'todolist:logout' %}">Logout</a>
+    </span>
+    {% endif %}
   </header>
 
   <content>
-
+    
+      
+   
 
     
 

@@ -1,0 +1,26 @@
+{% extends "todolist/base.html" %}
+
+{% block content %}
+    <div class="login-body">
+        <h1>Log in to TodoApp</h1>
+
+        {% if form.errors %}
+        <p>
+            Your login form is bad!
+            Maybe your login or passwork is incorrect. Try again.
+        </p>
+        {% else %}
+        <p>Use this form to login on this site</p>
+        {% endif %}
+
+        <div class="login-form">
+            <form action="{% url 'todolist:login' %}" method="post">
+                {{form.as_p}}
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                <p><input type="submit" value="login"> </p>
+                
+            </form>
+        </div>
+    </div>
+{% endblock %}

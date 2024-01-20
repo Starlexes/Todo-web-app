@@ -7,11 +7,13 @@ from taggit.models import Tag
 from todolist.models import Task, Importance
 from todolist.forms import EditTaskForm, AddTaskForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 importances = ['Low', 'Medium', 'High', 'Critical']
 
 
+@login_required(login_url='login/')
 def main_page(request, tag_slug=None):
    
     title = 'Todo'
