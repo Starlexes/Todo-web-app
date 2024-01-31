@@ -127,5 +127,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
-LOGIN_URL = 'login'
+LOGIN_URL = 'todolist:login'
 LOGOUT_URL = 'logout'
+
+MEDIA_URL = 'user-photo/'
+MEDIA_ROOT = BASE_DIR / 'user-photo'

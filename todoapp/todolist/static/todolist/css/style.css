@@ -27,16 +27,21 @@ header {
   background-color: #333;
   color: #fff;
   padding: 15px;
+  position: relative;
   text-align: center;
   font-size: 14px;
+  height: 80px;
 }
 
 
 .ordering {
-  margin: 20px;
+  position: fixed;
+  top: 120px;
+  left: 15px;
   width: 200px;
-  
+  transition: 1s;
 }
+
 
 .ordering > select {
   height: 30px;
@@ -134,9 +139,9 @@ footer {
 .new-task {
   color:#2d63ba;
   font-size: 20;
-  position: absolute;
+  position: fixed;
   right: 20px;
-  top: 22%;
+  top: 120px;
   
   
 }
@@ -284,25 +289,29 @@ footer {
 }
 
 .title-name {
-  width: 200px;
-  display: block;
-  margin: 0 auto;
+  
+  position: absolute;
+  display: inline-block;
+  left: 45%;
+  
 }
 
 .user {
-  display: block;
-  position: relative;
+  display: inline-block;
+  position: absolute;
+  top: 35%;
+  right: 5%;
+  font-size: 20px;
  
-  right: 10px;
 }
 .user a {
   text-decoration: none;
-  font-size: 20px;
+
   color: #fff;
 }
 
 .user a:hover {
-
+ 
   color: #b9b8b8;
 }
 

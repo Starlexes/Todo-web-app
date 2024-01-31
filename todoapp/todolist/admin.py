@@ -1,5 +1,5 @@
 from django.contrib import admin
-from todolist.models import Task, Importance
+from todolist.models import Task, Importance, Profile
 # Register your models here.
 
 
@@ -11,5 +11,10 @@ class TaskAdmin(admin.ModelAdmin):
     ordering = ['title', '-finish_date','finished']
 
 @admin.register(Importance)
-class Importance(admin.ModelAdmin):
+class ImportanceAdmin(admin.ModelAdmin):
     list_display = ['importance']
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'tasks','date_of_birth', 'photo']
+    raw_id_fields = ['user']

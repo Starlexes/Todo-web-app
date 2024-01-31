@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 from taggit.managers import TaggableManager
 # Create your models here.
 
@@ -41,6 +42,12 @@ class Importance(models.Model):
     def get_absolute_url(self):
         return reverse()
 
+class Profile(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    tasks = models.ForeignKey('Task', on_delete=models.SET_NULL, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    photo = models.ImageField(upload_to='user-photo/%Y/%m/%d/', blank=True)
 
-
+    def __str__(self):
+        return f"{self.user.username}'s profile"
 
