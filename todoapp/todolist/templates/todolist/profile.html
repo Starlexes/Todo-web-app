@@ -1,0 +1,45 @@
+{% extends "todolist/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="profile">
+        <h3>Your profile</h3>
+        <div class="profile-data">
+            <p>Username: {{request.user.username}}</p> 
+            
+            {% if request.user.email %}
+            <p>Email: {{request.user.email}}</p>
+                
+            {% else %}
+            <p>Email: not specified</p>
+                
+            {% endif %}
+
+            {% if request.user.first_name %}
+            <p>First name: {{request.user.first_name}}</p>
+                
+            {% else %}
+            <p>First name: not specified</p>
+                
+            {% endif %}
+
+            {% if request.user.last_name %}
+            <p>Last name: {{request.user.last_name}}</p>
+                
+            {% else %}
+            <p>Last name: not specified</p>
+                
+            {% endif %}
+
+            {% if profile_data.date_of_birth %}
+            <p>Date of birth: {{profile_data.date_of_birth}}</p>
+                
+            {% else %}
+            <p>Date of birth: not specified</p>
+                
+            {% endif %}
+            
+        </div>
+        <img alt="Profile image" src="{{profile_data.photo.url}}">
+    </div>   
+    
+{% endblock %}

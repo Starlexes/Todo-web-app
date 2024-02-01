@@ -3,11 +3,12 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.utils.text import slugify
 from taggit.models import Tag
-
-from todolist.models import Task, Importance
-from todolist.forms import EditTaskForm, AddTaskForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+
+from .models import Task, Importance, Profile
+from .forms import EditTaskForm, AddTaskForm, UserEditForm, ProfileEditForm
+
 
 # Create your views here.
 importances = ['Low', 'Medium', 'High', 'Critical']
@@ -50,7 +51,7 @@ def edit_task(request, task_id):
     sent = False
     
     if request.method == 'POST':
-        form = EditTaskForm(request.POST)
+        form = EditTaskForm(request.POST, instance=task)
         if form.is_valid():
             cd = form.cleaned_data
             slug = slugify(cd['title'])
@@ -64,7 +65,7 @@ def edit_task(request, task_id):
             sent = True
         return redirect(task, task_id=task.id)
     else:
-        form = EditTaskForm()
+        form = EditTaskForm(instance=task)
 
     return render(request, 'todolist/edit_task.html', {
         'sent':sent,
@@ -109,4 +110,29 @@ def add_task(request):
     return render(request, 'todolist/new_task.html', {'form':form,
                                                       'sent':sent})
     
+@login_required(login_url='login/')
+def edit_profile(request):
+    if request.method == "POST":
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('todolist:home')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'todolist/edit_profile.html', { 'user_form':user_form,
+                                                                'profile_form':profile_form})
 
+@login_required(login_url='login/')                                                                
+def profile(request):
+    user_id = request.user.id
+    complete_tasks = Task.objects.filter(finished=True)
+    uncomlete_tasks = Task.objects.filter(finished=False)
+    profile_data = Profile.objects.get(pk=user_id)
+    return render(request, 'todolist/profile.html', {
+        'ctasks':complete_tasks,
+        'unctasks':uncomlete_tasks,
+        'profile_data': profile_data,
+    })

@@ -11,7 +11,7 @@
     
     {% if request.user.is_authenticated %}
 
-      <span class="user"> Hi {{request.user.username}} |
+      <span class="user"> Hi <a href="{% url 'todolist:profile' %}">{{request.user.username|capfirst}}</a> |
         <a href="{% url 'todolist:logout' %}">Logout</a>
       </span>
     {% endif %}

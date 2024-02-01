@@ -1,0 +1,21 @@
+{% extends "todolist/base.html" %}
+
+{% block content %}
+    <div class="edit-profile">
+        <h1>Form to edit profile</h1>
+        <p>Use this form to edit your profile:</p>
+        {% with user_form as user %}
+        
+        {% with profile_form as profile %}
+        
+        <form method="post" enctype="multipart/form-data">
+            {{user.as_p}}
+            {{profile.as_p}}
+            {% csrf_token %}
+            <p><input type="submit" value="Save changes"></p>
+
+        </form>
+        {% endwith %}
+        {% endwith %}
+    </div>
+{% endblock %}

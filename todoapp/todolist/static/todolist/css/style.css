@@ -322,3 +322,55 @@ footer {
   
   margin-left: 50px;
 }
+
+.edit-profile {
+  
+  width: 600px;
+  margin: 0 auto;
+}
+
+.profile {
+  height: 500px;
+  width: 500px;
+  position: relative;
+  background-color: #d1d1d1;
+  border: 1px solid;
+  border-radius: 20px;
+  top: 20px;
+  left: 20px;
+}
+
+.profile h3, .profile p {
+  /* display: inline-block; */
+ 
+  
+}
+.profile h3 {
+  font-size: 25px;
+  top: 10px;
+  left: 40%;
+  position: absolute;
+}
+
+.profile p {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.profile img {
+  position: absolute;
+  top: 100px;
+  left: 30px;
+  height: 150px;
+  width: 150px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.profile-data {
+  position: absolute;
+  height: 100%;
+  width: 60%;
+  top: 20%;
+  right: 0;
+}
