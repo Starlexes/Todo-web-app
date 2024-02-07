@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from taggit.models import Tag
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from rest_framework import permissions, viewsets
 
@@ -145,3 +146,8 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     queryset = Task.objects.all().order_by('title')
     permission_classes = [permissions.IsAdminUser]
+
+class ImportantTaskViewSet(viewsets.ModelViewSet):
+    serializer_class = TaskSerializer
+    signif = Importance.objects.filter(Q(importance='High') | Q(importance='Critical'))
+    queryset = Task.objects.filter(signif__in=signif)

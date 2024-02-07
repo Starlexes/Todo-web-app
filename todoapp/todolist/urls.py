@@ -15,6 +15,7 @@ app_name = 'todolist'
 
 router = routers.DefaultRouter()
 router.register(r'tasks', views.TaskViewSet)
+router.register(r'important', views.ImportantTaskViewSet)
 
 urlpatterns = [
         path('', views.main_page, name='home'),
@@ -30,7 +31,7 @@ urlpatterns = [
         path('edit-profile/', views.edit_profile, name='edit_profile'),
         path('profile/', views.profile, name='profile'),
 
-        path('api/tasks', include(router.urls))
+        path('api/', include(router.urls))
 ]       
 
 if settings.DEBUG:
