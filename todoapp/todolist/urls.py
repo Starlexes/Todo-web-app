@@ -6,10 +6,15 @@ from django.urls import reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework import routers
+
 from . import views 
 from .utils import *
 
 app_name = 'todolist'
+
+router = routers.DefaultRouter()
+router.register(r'tasks', views.TaskViewSet)
 
 urlpatterns = [
         path('', views.main_page, name='home'),
@@ -24,6 +29,8 @@ urlpatterns = [
         path('password-change/done/', auth_views.PasswordChangeDoneView.as_view(template_name = "registration/password_change_done.html" ), name='password_change_done'),
         path('edit-profile/', views.edit_profile, name='edit_profile'),
         path('profile/', views.profile, name='profile'),
+
+        path('api/tasks', include(router.urls))
 ]       
 
 if settings.DEBUG:

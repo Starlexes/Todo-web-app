@@ -6,9 +6,11 @@ from taggit.models import Tag
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 
+from rest_framework import permissions, viewsets
+
 from .models import Task, Importance, Profile
 from .forms import EditTaskForm, AddTaskForm, UserEditForm, ProfileEditForm
-
+from .serializers import TaskSerializer
 
 # Create your views here.
 importances = ['Low', 'Medium', 'High', 'Critical']
@@ -136,3 +138,10 @@ def profile(request):
         'unctasks':uncomlete_tasks,
         'profile_data': profile_data,
     })
+
+# Viewsets
+
+class TaskViewSet(viewsets.ModelViewSet):
+    serializer_class = TaskSerializer
+    queryset = Task.objects.all().order_by('title')
+    permission_classes = [permissions.IsAdminUser]
