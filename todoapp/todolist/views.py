@@ -156,11 +156,13 @@ class ImportantTaskViewSet(viewsets.ModelViewSet):
 
 class TaskAboutViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
+    lookup_field = 'slug'
     def get_queryset(self):
         
-        pk = self.kwargs.get('pk')
-        
-        queryset = Task.objects.filter(pk=pk)
+        #pk = self.kwargs.get('pk')
+        task_slug = self.kwargs.get('slug')
+        print(task_slug)
+        queryset = Task.objects.filter(slug=task_slug)
        
         return queryset
             
