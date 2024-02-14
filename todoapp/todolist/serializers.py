@@ -5,3 +5,4 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         exclude = ['slug']
+

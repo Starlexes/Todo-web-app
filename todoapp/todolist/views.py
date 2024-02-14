@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
 from rest_framework import permissions, viewsets
+from rest_framework.response import Response
 
 from .models import Task, Importance, Profile
 from .forms import EditTaskForm, AddTaskForm, UserEditForm, ProfileEditForm
@@ -145,9 +146,24 @@ def profile(request):
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     queryset = Task.objects.all().order_by('title')
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated,permissions.IsAdminUser]
 
 class ImportantTaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     signif = Importance.objects.filter(Q(importance='High') | Q(importance='Critical'))
     queryset = Task.objects.filter(signif__in=signif)
+    permission_classes = [permissions.IsAuthenticated,permissions.IsAdminUser]
+
+class TaskAboutViewSet(viewsets.ModelViewSet):
+    serializer_class = TaskSerializer
+    def get_queryset(self):
+        
+        pk = self.kwargs.get('pk')
+        
+        queryset = Task.objects.filter(pk=pk)
+       
+        return queryset
+            
+        
+
+        

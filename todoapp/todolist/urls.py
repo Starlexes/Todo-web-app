@@ -14,8 +14,9 @@ from .utils import *
 app_name = 'todolist'
 
 router = routers.DefaultRouter()
-router.register(r'tasks', views.TaskViewSet)
+router.register(r'tasks', views.TaskViewSet, basename='tasks')
 router.register(r'important', views.ImportantTaskViewSet)
+
 
 urlpatterns = [
         path('', views.main_page, name='home'),
@@ -30,7 +31,7 @@ urlpatterns = [
         path('password-change/done/', auth_views.PasswordChangeDoneView.as_view(template_name = "registration/password_change_done.html" ), name='password_change_done'),
         path('edit-profile/', views.edit_profile, name='edit_profile'),
         path('profile/', views.profile, name='profile'),
-
+        path('api/about/<int:pk>/', views.TaskAboutViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='api-task-about'),
         path('api/', include(router.urls))
 ]       
 
