@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
-from rest_framework import permissions, viewsets
+from rest_framework import permissions, viewsets, mixins
 from rest_framework.response import Response
 
 from .models import Task, Importance, Profile
@@ -143,7 +143,7 @@ def profile(request):
 
 # Viewsets
 
-class TaskViewSet(viewsets.ModelViewSet):
+class TaskViewSet( viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     queryset = Task.objects.all().order_by('title')
     permission_classes = [permissions.IsAuthenticated,permissions.IsAdminUser]
@@ -155,15 +155,13 @@ class ImportantTaskViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated,permissions.IsAdminUser]
 
 class TaskAboutViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
     serializer_class = TaskSerializer
     lookup_field = 'slug'
+
     def get_queryset(self):
-        
-        #pk = self.kwargs.get('pk')
         task_slug = self.kwargs.get('slug')
-        print(task_slug)
-        queryset = Task.objects.filter(slug=task_slug)
-       
+        queryset = self.queryset.filter(slug=task_slug)
         return queryset
             
         
