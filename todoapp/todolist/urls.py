@@ -31,8 +31,9 @@ urlpatterns = [
         path('password-change/done/', auth_views.PasswordChangeDoneView.as_view(template_name = "registration/password_change_done.html" ), name='password_change_done'),
         path('edit-profile/', views.edit_profile, name='edit_profile'),
         path('profile/', views.profile, name='profile'),
-        path('api/about/<slug:slug>/', views.TaskAboutViewSet.as_view({'get': 'retrieve', 'delete': 'destroy', 'put': 'update'}), name='api-task-about'),
-        path('api/', include(router.urls))
+        path('api/v1/about/<slug:slug>/', views.TaskAboutViewSet.as_view({'get': 'retrieve', 'delete': 'destroy', 'put': 'update'}), name='api-task-about'),
+        path('api/v1/', include(router.urls)),
+       
 ]       
 
 if settings.DEBUG:
