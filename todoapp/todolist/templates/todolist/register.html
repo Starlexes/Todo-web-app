@@ -1,0 +1,12 @@
+{% extends "todolist/base.html" %}
+
+{% block content %}
+ <div class="edit-profile">
+    <h1>Form to sign up</h1>
+    <form method="post">
+        {{user_form.as_p}}
+        {% csrf_token %}
+        <p><input type="submit" value="Create an account"/></p>
+    </form>
+</div>
+{% endblock %}

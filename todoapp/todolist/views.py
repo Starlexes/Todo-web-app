@@ -6,25 +6,31 @@ from taggit.models import Tag
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-
+from django.contrib.auth.models import User
 from rest_framework import permissions, viewsets, mixins
 from rest_framework.response import Response
 
 from .models import Task, Importance, Profile
-from .forms import EditTaskForm, AddTaskForm, UserEditForm, ProfileEditForm
+from .forms import EditTaskForm, AddTaskForm, UserEditForm, ProfileEditForm, UserRegistrationForm
 from .serializers import TaskSerializer
 
 # Create your views here.
 importances = ['Low', 'Medium', 'High', 'Critical']
 
 
+def get_user(request):
+    user_id = request.user.id
+    user = User.objects.get(pk=user_id)
+    return user
+
 @login_required(login_url='login/')
 def main_page(request, tag_slug=None):
    
     title = 'Todo'
+    user = get_user(request)
     
     tag = None
-    tasks = Task.objects.all()
+    tasks = Task.objects.filter(user=user)
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         tasks= Task.objects.filter(tag__in = [tag])
@@ -89,30 +95,32 @@ def delete_task(request, task_id):
     
 def add_task(request):
     sent = False
-    
-    if request.method == 'POST':
-        form = AddTaskForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            slug = slugify(cd['title'])
-            title = request.POST['title']
-            
-            description = request.POST['description']
-            finish_date = request.POST['finish_date']
-            finished = False
-            signif = Importance.objects.get(pk=request.POST['signif'])
-            task = Task(title=title, slug=slug,description=description, finish_date=finish_date,
-                        finished=finished, signif=signif )
-            task.save()
-            sent = True
-        return render(request, 'todolist/new_task.html', {'form':form,
-                                                    'task':task,
-                                                    'sent':sent})
-    
+    user = get_user(request)
+    print(request.user.id)
+    if user is not None:  # Проверка наличия пользователя
+        if request.method == 'POST':
+            form = AddTaskForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                slug = slugify(cd['title'])
+                title = request.POST['title']
+                description = request.POST['description']
+                finish_date = request.POST['finish_date']
+                finished = False
+                signif = Importance.objects.get(pk=request.POST['signif'])
+                
+                task = Task(title=title, slug=slug, description=description, finish_date=finish_date,
+                            finished=finished, signif=signif, user=user)
+                task.save()
+                sent = True
+                return render(request, 'todolist/new_task.html', {'form':form, 'task':task, 'sent':sent})
+        
+        else:
+            form = AddTaskForm()
+        return render(request, 'todolist/new_task.html', {'form': form, 'sent': sent})
     else:
-        form = AddTaskForm()
-    return render(request, 'todolist/new_task.html', {'form':form,
-                                                      'sent':sent})
+       
+        return HttpResponse("User not found.")
     
 @login_required(login_url='login/')
 def edit_profile(request):
@@ -141,6 +149,22 @@ def profile(request):
         'profile_data': profile_data,
     })
 
+def register(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            return render(request, 'todolist/register_done.html', {'new_user': new_user})
+
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'todolist/register.html', {
+        'user_form':form,
+    })
+
+
 # Viewsets
 
 class TaskViewSet( viewsets.ModelViewSet):
@@ -165,5 +189,6 @@ class TaskAboutViewSet(viewsets.ModelViewSet):
         return queryset
             
         
+
 
         

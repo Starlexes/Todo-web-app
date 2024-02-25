@@ -1,0 +1,8 @@
+{% extends "todolist/base.html" %}
+
+{% block content %}
+<div class="edit-profile">
+    <h1>Welcome to our site {{new_user.first_name}}</h1>
+    <p>Your account was successfully created and you can sign in using this <a href="{% url 'todolist:login' %}">form</a></p>
+</div>
+{% endblock %}
