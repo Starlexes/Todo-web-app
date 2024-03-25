@@ -4,6 +4,7 @@
 {% block content %}
     <a class="new-task" href='{% url "todolist:add_task" %}'>Add new task</a>   
     <a class="export" href='{% url "todolist:export" %}'>Export tasks</a>
+    <a class="export-csv" href="{% url 'todolist:export_csv' %}">Export tasks to csv</a>
 {% if tasks %}
     <div class="ordering">
         <select id='ordering'name="ordering">

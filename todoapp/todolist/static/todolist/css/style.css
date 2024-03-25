@@ -137,28 +137,36 @@ footer {
 }
 
 .export {
-  color:#2d63ba;
-  font-size: 20;
-  position: fixed;
-  top: 120px;
-  right: 200px; 
+ 
+  right: 25%; 
 }
-
+.export-csv {
+  
+  right: 38%; 
+}
 
 .new-task {
-  color:#2d63ba;
-  font-size: 20;
+  right: 10%;
   position: fixed;
-  right: 20px;
-  top: 120px;
-  
-  
-}
-.new-task:hover, .export:hover {
-  font-size: 20px;
 }
 
-.new-task:visited, .export:hover {
+.export, .export-csv {
+  position: absolute;
+}
+
+
+.new-task, .export, .export-csv {
+  color:#2d63ba;
+  font-size: 20;
+  
+  top: 120px;
+}
+.new-task:hover, .export:hover, .export-csv:hover {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.new-task:visited, .export:visited, .export-csv:visited {
   color: #3a8ab5;
 
 }

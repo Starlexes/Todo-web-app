@@ -34,8 +34,10 @@ urlpatterns = [
         path('profile/', views.profile, name='profile'),
         path('api/v1/about/<slug:slug>/', views.TaskAboutViewSet.as_view({'get': 'retrieve', 'delete': 'destroy', 'put': 'update'}), name='api-task-about'),
         path('api/v1/', include(router.urls)),
-        path('export-tasks', views.export_tasks, name='export'),
-        path('export-tasks/<int:task_id>', views.export_tasks, name='export'),
+        path('export-tasks/', views.export_tasks, name='export'),
+        path('export-tasks/<int:task_id>/', views.export_tasks, name='export'),
+        path('export-tasks-csv/', views.export_to_csv, name='export_csv'),
+        path('export-tasks-csv/<int:task_id>/', views.export_to_csv, name='export_csv'),
 ]       
 
 if settings.DEBUG:

@@ -1,4 +1,5 @@
 import json
+import csv
 from datetime import datetime
 from django.http import HttpResponse
 from django.core.serializers import serialize
@@ -171,9 +172,11 @@ def export_tasks(request, task_id=None):
     user = get_user(request)
     
     if task_id is None:
+        file_name = f'tasks of {user.username}.json'
         data = Task.objects.filter(user=user)
     else:
         data = Task.objects.filter(user=user, pk=task_id)
+        file_name = f'task{task_id} of {user.username}.json'
 
     serialized_data = serialize('json', data) 
     data_list = json.loads(serialized_data)
@@ -184,9 +187,30 @@ def export_tasks(request, task_id=None):
         item['fields']['finish_date'] = fd.strftime('%Y-%m-%d %H:%M:%S')
 
     response = HttpResponse(content_type='application/json') 
-    response['Content-Disposition'] = f'attachment; filename="tasks of {user.username}.json"'
+    response['Content-Disposition'] = f'attachment; filename="{file_name}"'
     json.dump(data_list, response, ensure_ascii=False)
     return response
+
+def export_to_csv(request, task_id = None):
+    user = get_user(request)
+    
+    if task_id is None:
+        file_name = f'tasks of {user.username}.csv'
+        data = Task.objects.filter(user=user).only('title', 'description', 'finish_date', 'finished', 'signif')
+    else:
+        data = Task.objects.filter(user=user, pk=task_id).only('title', 'description', 'finish_date', 'finished', 'signif')
+        file_name = f'task{task_id} of {user.username}.csv'
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{file_name}"'
+    
+    writer = csv.writer(response)
+    writer.writerow(['Title', 'Description', 'Finish_date', 'Finished', 'Signif'])
+    for d in data:
+        writer.writerow([d.title, d.description, d.finish_date, d.finished, d.signif])
+
+    return response
+
 # Viewsets
 
 class TaskViewSet( viewsets.ModelViewSet):
