@@ -1,4 +1,7 @@
+import json
+from datetime import datetime
 from django.http import HttpResponse
+from django.core.serializers import serialize
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse
 from django.utils.text import slugify
@@ -164,7 +167,26 @@ def register(request):
         'user_form':form,
     })
 
+def export_tasks(request, task_id=None):
+    user = get_user(request)
+    
+    if task_id is None:
+        data = Task.objects.filter(user=user)
+    else:
+        data = Task.objects.filter(user=user, pk=task_id)
 
+    serialized_data = serialize('json', data) 
+    data_list = json.loads(serialized_data)
+
+    for item in data_list:
+                
+        fd = datetime.fromisoformat(item['fields']['finish_date'].replace('Z', '+00:00')) 
+        item['fields']['finish_date'] = fd.strftime('%Y-%m-%d %H:%M:%S')
+
+    response = HttpResponse(content_type='application/json') 
+    response['Content-Disposition'] = f'attachment; filename="tasks of {user.username}.json"'
+    json.dump(data_list, response, ensure_ascii=False)
+    return response
 # Viewsets
 
 class TaskViewSet( viewsets.ModelViewSet):

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 # Create your models here.
 
+
 class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks', verbose_name='User')
     title = models.CharField(max_length=50, verbose_name='Title')

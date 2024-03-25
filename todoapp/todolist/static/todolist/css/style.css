@@ -136,6 +136,15 @@ footer {
   color: #bd2a2a;
 }
 
+.export {
+  color:#2d63ba;
+  font-size: 20;
+  position: fixed;
+  top: 120px;
+  right: 200px; 
+}
+
+
 .new-task {
   color:#2d63ba;
   font-size: 20;
@@ -145,14 +154,16 @@ footer {
   
   
 }
-.new-task:hover {
+.new-task:hover, .export:hover {
   font-size: 20px;
 }
 
-.new-task:visited {
+.new-task:visited, .export:hover {
   color: #3a8ab5;
 
 }
+
+
 
 .task-body {
   font-size: 30px;

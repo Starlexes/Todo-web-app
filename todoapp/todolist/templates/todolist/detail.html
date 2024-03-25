@@ -29,6 +29,8 @@
     </style>
     <div class="menu-tools">
         <a href="{%url 'todolist:home' %}" class="link-home">Back to main list</a>
+        <a href="{% url 'todolist:export' task.id %}">Export task</a>
+        
         <div class="edit">
             <a href="{% url 'todolist:edit_task' task.id %}">Edit task</a>
         </div>
