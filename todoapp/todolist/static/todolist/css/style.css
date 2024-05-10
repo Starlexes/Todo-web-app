@@ -478,3 +478,41 @@ footer {
   font-weight: bold;
   color: #443e3e; 
 }
+
+.search {
+  
+  position: relative;
+  top: 50px;
+  left: 20px;
+}
+
+.search  form {
+  width: 250px;
+  display: flex;
+  
+  flex-direction: column;
+  justify-content: center;
+}
+
+.search input[type="text"] {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.search button[type="submit"] {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search button[type="submit"]:hover {
+  background-color: #0550a0;
+}

@@ -1,0 +1,23 @@
+{% extends "todolist/base.html" %}
+
+{% block content %}
+<div class="main_block">
+    {% if results %}
+    <h1>Search results:</h1>
+    <h3>
+        {% with results.count as tot_res %}
+            Found {{tot_res}} result{{ tot_res|pluralize }} 
+        {% endwith %}
+    </h3>
+    {% for res in results %}
+        <p><a href="{{res.get_absolute_url}}">{{res.title}}</a></p>
+
+    {% endfor %}
+    {% else %}
+    <p>There are no results for your query.</p>
+    {% endif %}
+    <p><a href="{% url 'todolist:home' %}">Back to main list</a></p>
+    
+
+</div>
+{% endblock %}

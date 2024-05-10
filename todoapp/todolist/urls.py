@@ -38,6 +38,7 @@ urlpatterns = [
         path('export-tasks/<int:task_id>/', views.export_tasks, name='export'),
         path('export-tasks-csv/', views.export_to_csv, name='export_csv'),
         path('export-tasks-csv/<int:task_id>/', views.export_to_csv, name='export_csv'),
+        path('search/', views.task_search, name='search'),
 ]       
 
 if settings.DEBUG:

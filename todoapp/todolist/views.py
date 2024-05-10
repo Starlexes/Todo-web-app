@@ -11,11 +11,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
+from django.contrib.postgres.search import SearchVector
 from rest_framework import permissions, viewsets, mixins
 from rest_framework.response import Response
 
 from .models import Task, Importance, Profile
-from .forms import EditTaskForm, AddTaskForm, UserEditForm, ProfileEditForm, UserRegistrationForm
+from .forms import EditTaskForm, AddTaskForm, UserEditForm, \
+                    ProfileEditForm, UserRegistrationForm, SearchForm
+
 from .serializers import TaskSerializer
 
 # Create your views here.
@@ -35,6 +38,11 @@ def main_page(request, tag_slug=None):
     
     tag = None
     tasks = Task.objects.filter(user=user)
+    if request.method == 'GET':
+        query = request.GET.get('query')
+        if query:
+            return redirect('search')
+        
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
         tasks= Task.objects.filter(tag__in = [tag])
@@ -210,6 +218,22 @@ def export_to_csv(request, task_id = None):
         writer.writerow([d.title, d.description, d.finish_date, d.finished, d.signif])
 
     return response
+
+def task_search(request):
+   
+    user = get_user(request)
+    query = request.GET.get('query')
+    result = []
+
+    if query:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results = Task.objects.annotate(search=SearchVector('title', 'description', 'tag')
+                                            ).filter(user=user, search=query)
+    return render(request, 'todolist/search.html', {'srch_form':form,                                             
+                                                   'query':query,
+                                                   'results':results})
 
 # Viewsets
 

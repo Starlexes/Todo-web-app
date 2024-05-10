@@ -40,3 +40,6 @@ class UserRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['rep_password']:
             raise forms.ValidationError("Passwords don't match")
         return cd['rep_password']
+    
+class SearchForm(forms.Form):
+    query = forms.CharField()
