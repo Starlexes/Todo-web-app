@@ -1,2 +1,3 @@
-functions.txt
-users.txt
+venv
+.idea
+.vscode
